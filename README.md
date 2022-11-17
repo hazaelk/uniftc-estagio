@@ -4,8 +4,11 @@ Este repositório contem apenas o front-end da aplicação cuja API é rodada se
 
 ### Stack:
 NextJS 13 - Server rendering habilitado por padrão
+
 TailwindCSS + PostCSS
+
 Gerenciador de pacotes recomendado: Yarn ou PNPM
+
 
 ### Execução:
 Instale as dependências do repositório
