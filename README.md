@@ -38,6 +38,15 @@ npm run build && npm run start
 yarn build && yarn start
 ```
 
+Executando testes
+```bash
+// com npm
+npm run test
+
+// com yarn
+yarn test
+```
+
 Deploy:
 - Compile o código para produção ao menos uma vez.
 - Aponte o reverse proxy para 3000 utilizando o domínio desejado
