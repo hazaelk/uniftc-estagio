@@ -1,9 +1,9 @@
-import MainLayout from '@components/layouts/MainLayout'
+import HomeLayout from '@/components/layouts/HomeLayout'
 
 export default function Home() {
   return (
-    <MainLayout>
-      <h1 className='text-4xl font-bold'>Funcionando</h1>
-    </MainLayout>
+    <HomeLayout>
+      {/* <h1 className='text-4xl font-bold'>Funcionando</h1> */}
+    </HomeLayout>
   )
 }
