@@ -1,7 +1,6 @@
 import CursoCard from "@/components/layouts/CursoCard";
 import HeaderLayout from "@/components/layouts/HeaderLayout";
 import Image from "next/image";
-import styles from '../styles/Landing.module.css'
 import foto1 from '../public/cards_publicidade/foto1.png'
 import foto2 from '../public/cards_publicidade/foto2.png'
 import foto3 from '../public/cards_publicidade/foto3.png'
@@ -30,24 +29,31 @@ const listaCursos = [
                 <h1 className="text-white font-bold text-4xl">Lorem ipsum</h1>
                 <h5 className="text-gray-300 mt-1 mb-10 text-sm">Dolor sit amet, it ame lorem lor.</h5>
             </section>
-            <div className="block mx-auto absolute ml-16 w-full sm:flex sm:items-center sm:justify-center">
-                <Image src={foto1} className={styles.imgProps}
+            <div className="flex justify-evenly sm:relative sm:z-1 sm:left-auto sm:right-auto">
+                <Image src={foto1} 
+                className="w-1/4  m-1 sm:w-52 sm:h-56 sm:absolute sm:left-40"
                 alt={"Imagem de exemplo"}
                 />
                 <Image src={foto2}
-                className={styles.imgProps}
+                className="w-1/4  m-1 sm:w-52 sm:h-56 sm:absolute sm:origin-center"
                 alt={"Imagem de exemplo"}
                 />
                 <Image src={foto3}
-                className={styles.imgProps}
+                className="w-1/4 m-1 sm:w-52 sm:h-56 sm:absolute sm:right-40"
                 alt={"Imagem de exemplo"}
                 />
             </div>
-            <main className="h-full w-full absolute z-0 mt-32 bg-white">
-                <h2 className="text-black font-medium text-2xl mx-12 absolute top-40 mb-4">Recentemente adicionados:</h2>
-                {listaCursos.map((item) => {
-                    return <CursoCard key={item.title} title={item.title} description={item.description}/>
-                })}
+            <main className="h-full w-full mt-24 bg-white">
+                <div className="flex flex-col items-center justify-center">
+                    <h2 className="text-black font-medium text-2xl py-4 sm:pt-36">Recentemente adicionados:</h2>
+                    <div className="grid grid-cols-2 gap-5 sm:grid sm:grid-cols-3 sm:gap-8 sm:pt-4">
+                        {listaCursos.map((item) => {
+                            return <CursoCard key={item.title} title={item.title} description={item.description}/>
+                        })}
+                    </div>
+
+                </div>
+
             </main>
             
         </div>

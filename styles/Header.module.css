@@ -1,8 +1,0 @@
-.linksNav {
-    transition: all 0.4s;
-    margin-right: 2em;
-}
-.linksNav:hover {
-    color: black;
-    text-decoration: underline;
-}
