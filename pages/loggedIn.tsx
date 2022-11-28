@@ -21,31 +21,33 @@ const listaCursos = [
     {title: 'Boas práticas de programação', 
     description: 'Curso de Boas práticas de programação completo'},
 ]
+const stylePics = 'flex transition-all w-48 h-48 m-2 md:w-64 md:h-72 lg:w-72 lg:h-80 xl:w-80 xl:h-96'
 
     return (
         <div className="bg-blue-600 h-screen py-4 transition-all">
             <HeaderLayout 
-            username="" 
-            email=""/>
-
+            username="teste" 
+            email="teste@gmail.com"/>
+            
             <HeaderTitles 
             title="Lorem ipsum" 
             subtitle="Dolor sit amet, it ame lorem lor." />
 
-            <div className="flex justify-evenly sm:relative sm:z-1 sm:left-auto sm:right-auto">
+            <div className="max-h-fit transition-all w-full flex justify-evenly items-center text-">
                 <Image src={foto1} 
-                className="w-1/4  m-1 sm:w-52 sm:h-56 sm:absolute sm:left-40"
+                className={stylePics}
                 alt={"Imagem de exemplo"}
                 />
                 <Image src={foto2}
-                className="w-1/4  m-1 sm:w-52 sm:h-56 sm:absolute sm:origin-center"
+                className={stylePics}
                 alt={"Imagem de exemplo"}
                 />
                 <Image src={foto3}
-                className="w-1/4 m-1 sm:w-52 sm:h-56 sm:absolute sm:right-40"
+                className={stylePics}
                 alt={"Imagem de exemplo"}
                 />
             </div>
+            
             <main className="h-full w-full mt-24 bg-white">
                 <div className="flex flex-col items-center justify-center">
                     <h2 className="text-black font-medium text-2xl py-4 sm:pt-36">Recentemente adicionados:</h2>
