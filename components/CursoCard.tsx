@@ -1,8 +1,9 @@
 // titulo(key), descricao, 
-interface CursoCardProps{
+interface CursoCardProps {
     title: string;
     description: string;
 }
+
 export default function CursoCard(props: CursoCardProps) {
     return (
         <div className="w-56 h-42 rounded-lg shadow-xl bg-gray-100 border-x top-48 mb-8 flex flex-col justify-between">
