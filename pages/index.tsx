@@ -1,10 +1,6 @@
-import CursoCard from "@/components/layouts/CursoCard";
-import HeaderLayout from "@/components/layouts/HeaderLayout";
-import Image from "next/image";
-import foto1 from '../public/cards_publicidade/foto1.png'
-import foto2 from '../public/cards_publicidade/foto2.png'
-import foto3 from '../public/cards_publicidade/foto3.png'
-
+import CursoCard from "@/components/layouts/CursoCard"
+import HeaderLayout from "@/components/layouts/HeaderLayout"
+import Image from "next/image"
 
 export default function LandingPage() {
 const listaCursos = [
@@ -30,17 +26,20 @@ const listaCursos = [
                 <h5 className="text-gray-300 mt-1 mb-10 text-sm">Dolor sit amet, it ame lorem lor.</h5>
             </section>
             <div className="flex justify-evenly sm:relative sm:z-1 sm:left-auto sm:right-auto">
-                <Image src={foto1} 
-                className="w-1/4  m-1 sm:w-52 sm:h-56 sm:absolute sm:left-40"
-                alt={"Imagem de exemplo"}
+                <Image 
+                    src={'/cards_publicidade/foto1.png'} 
+                    className="w-1/4  m-1 sm:w-52 sm:h-56 sm:absolute sm:left-40"
+                    alt={""}
                 />
-                <Image src={foto2}
-                className="w-1/4  m-1 sm:w-52 sm:h-56 sm:absolute sm:origin-center"
-                alt={"Imagem de exemplo"}
+                <Image 
+                    src={'/cards_publicidade/foto2.png'}
+                    className="w-1/4  m-1 sm:w-52 sm:h-56 sm:absolute sm:origin-center"
+                    alt={""}
                 />
-                <Image src={foto3}
-                className="w-1/4 m-1 sm:w-52 sm:h-56 sm:absolute sm:right-40"
-                alt={"Imagem de exemplo"}
+                <Image 
+                    src={'/cards_publicidade/foto3.png'}
+                    className="w-1/4 m-1 sm:w-52 sm:h-56 sm:absolute sm:right-40"
+                    alt={""}
                 />
             </div>
             <main className="h-full w-full mt-24 bg-white">
