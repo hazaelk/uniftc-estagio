@@ -22,8 +22,9 @@ const listaCursos = [
     description: 'Curso de Boas práticas de programação completo'},
 ]
 
+const imgLandingStyle = "w-1/4 h-1/5 absolute top-56 sm:top-4 sm:w-1/5 sm:h-36 sm:absolute md:top-4 md:max-w-1/4 md:min-h-40 md:absolute lg:top-0 lg:w-1/5 lg:h-52 lg:absolute"
     return (
-        <div className="bg-blue-600 h-screen py-4 transition-all">
+        <div className="bg-blue-600 h-1/2 py-4 transition-all">
             <HeaderLayout 
             username="" 
             email=""/>
@@ -34,22 +35,23 @@ const listaCursos = [
 
             <div className="flex justify-evenly sm:relative sm:z-1 sm:left-auto sm:right-auto">
                 <Image src={foto1} 
-                className="w-1/4  m-1 sm:w-52 sm:h-56 sm:absolute sm:left-40"
+                className={imgLandingStyle + "sm:left-24 left-10 md:left-28"}
                 alt={"Imagem de exemplo"}
                 />
                 <Image src={foto2}
-                className="w-1/4  m-1 sm:w-52 sm:h-56 sm:absolute sm:origin-center"
+                className={imgLandingStyle + "origin-center"}
                 alt={"Imagem de exemplo"}
                 />
                 <Image src={foto3}
-                className="w-1/4 m-1 sm:w-52 sm:h-56 sm:absolute sm:right-40"
+                className={imgLandingStyle + "sm:right-24 right-10 md:right-28"}
                 alt={"Imagem de exemplo"}
                 />
             </div>
-            <main className="h-full w-full mt-24 bg-white">
+            <main className="h-screen overflow-x-scroll w-full mt-24 bg-white">
                 <div className="flex flex-col items-center justify-center">
-                    <h2 className="text-black font-medium text-2xl py-4 sm:pt-36">Recentemente adicionados:</h2>
-                    <div className="grid grid-cols-2 gap-5 sm:grid sm:grid-cols-3 sm:gap-8 sm:pt-4">
+                    <h2 className="text-black font-medium text-2xl pt-16 pb-8 mt-10 sm:pt-16 md:pt-16 lg:pt-24">Recentemente adicionados:</h2>
+                    <div className="xs:grid xs:grid-cols-2 xs:gap-8 sm:grid sm:grid-cols-3 sm:gap-10 md:grid md:grid-cols-4 md:gap-14">
+                     
                         {listaCursos.map((item) => {
                             return <CursoCard key={item.title} title={item.title} description={item.description}/>
                         })}
