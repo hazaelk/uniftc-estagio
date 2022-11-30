@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import ImageBackground from '../public/assets_login/img-login.png'
 import Ftclogo from '../public/assets_login/ftc-logo.svg'
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 
@@ -14,6 +14,7 @@ const HomeLayout = ({ children }: Props) => {
 
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [register, setRegister] = useState<boolean>(false)
 
   const handleChangeUsername = (e: any) => {
     e.preventDefault()
@@ -36,6 +37,11 @@ const HomeLayout = ({ children }: Props) => {
         console.log("API Error:", e)
       })
   }
+  const handlerRegisterUser = (e: any) => {
+    e.preventDefault()
+
+  }
+
 
   return <div className='flex items-center justify-center w-full h-screen text-black text-sm font-light bg-blue-50'>
     {children}
@@ -73,6 +79,12 @@ const HomeLayout = ({ children }: Props) => {
           onChange={handleChangePassword}
           value={password}
           className={inputStyle} />
+          <button className='font-semibold focus:font-bold focus:text-sky-800'>
+            <p className='text-end text-sky-700 hover:text-sky-500'
+            onClick={handlerRegisterUser}
+            >Registre-se
+            </p>
+          </button>
         <button
           className="bg-blue-600 text-white font-semibold w-full h-8 rounded-md mt-4 active:bg-blue-800"
           onClick={handlerClickConnect}

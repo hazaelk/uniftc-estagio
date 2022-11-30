@@ -1,6 +1,9 @@
+import { url } from "inspector";
 import Image from "next/image";
 import { useState } from "react";
 import UserIcon from '../../public/usericon.png';
+import HeaderTitles from "./HeaderTitles";
+import PicsAbsolute from "./PicsAbsolute";
 interface clientProps {
     username?: string;
     email?: string;
@@ -16,11 +19,13 @@ export default function HeaderLayout(props: clientProps) {
 
     let dropDownShow = dropdown ? 'absolute' : 'hidden'
     let normalscreen = typeof window !== 'undefined' && window.screen.width > 475 ? true : false
+    let renderizarPics = typeof window !== 'undefined' && window.location.href.includes('cursos') ? true : false
 
     const hideMenuNav = "hidden"
     const showMenuNav = "block absolute w-full h-screen top-0 left-0 bg-white z-10 flex flex-col justify-evenly items-center"
     const hamburguerItem = "border-b border-gray-400 my-8 mx-4 px-2 py-1 rounded-lg hover:text-sky-600 hover:bg-white"
 
+    
 
     function BotaoEntrar() {
         return (
@@ -31,22 +36,24 @@ export default function HeaderLayout(props: clientProps) {
             </div>
         )
     }
-    const screen1 = <>
+    let screen1 = <>
         <div className="flex justify-between bg-transparent text-white font-normal transition px-4 relative" >
             <div>
-                <a href="/landingpage">
-                    <Image src="https://aluno.uniftc.edu.br/assets/images/uniftc-branco.png" width={150} height={100} alt="Logo da FTC" />
+                <a href="/landingpage" >
+                    <Image src="https://aluno.uniftc.edu.br/assets/images/uniftc-branco.png" 
+                    style={{minWidth: 60, minHeight: 20}}
+                    width={80} height={60} alt="Logo da FTC" />
                 </a>
             </div>
 
-            <ul className="flex font-medium ml-16">
-                <li className="mx-4 px-2 py-1 rounded-lg hover:text-sky-600 hover:bg-white">
-                    <a href="/HomeLayout">Início</a>
+            <ul className="flex font-medium -ml-4">
+                <li className="mx-4 px-2 py-1.5 rounded-lg hover:text-sky-600 hover:bg-white">
+                    <a href={props.username ? '/loggedIn' : '/landingpage'}>Início</a>
                 </li>
-                <li className="mx-4 px-2 py-1 rounded-lg hover:text-sky-600 hover:bg-white">
+                <li className="mx-4 px-2 py-1.5 rounded-lg hover:text-sky-600 hover:bg-white">
                     <a href="/cursos">Cursos</a>
                 </li>
-                <li className="mx-4 px-2 py-1 rounded-lg hover:text-sky-600 hover:bg-white">
+                <li className="mx-4 px-2 py-1.5 rounded-lg hover:text-sky-600 hover:bg-white">
                     <a href="/about">Sobre</a>
                 </li>
             </ul>
@@ -73,8 +80,11 @@ export default function HeaderLayout(props: clientProps) {
                 </div>
             </div>
         </div>
+        <HeaderTitles title="Faculdade de Tecnologias e Ciências" 
+            subtitle="Centro universitário." />
+        {renderizarPics ? '' : <PicsAbsolute />}
     </>
-    const screen2 = <>
+    let screen2 = <>
         <div className="flex items-center justify-between border-b border-gray-400 py-8">
             <div>
                 <a href="/landingpage">
@@ -106,21 +116,24 @@ export default function HeaderLayout(props: clientProps) {
                                 <line x1="6" y1="6" x2="18" y2="18" />
                             </svg>
                         </div>
-                        <ul className="flex flex-col items-center justify-between min-h-[250px] font-medium">
+                        <ul className="flex flex-col items-center justify-between min-h-[250px] font-medium leading-none">
                             <li className={hamburguerItem}>
                                 <a href="/loggedIn">Início</a>
                             </li>
                             <li className={hamburguerItem}>
                                 <a href="/cursos">Cursos</a>
                             </li>
-                            <li className={hamburguerItem}>
-                                <a href="/about">Sobre</a>
+                            <li className={hamburguerItem} style={{backgroundColor: "#922"}}>
+                                <a href="/">Sair</a>
                             </li>
                         </ul>
                     </div>
                 </section>
             </nav>
         </div>
+        <HeaderTitles title="Lorem ipsum" 
+            subtitle="Dolor sit amet, it ame lorem lor." />
+        {renderizarPics ? '' : <PicsAbsolute />}
     </>
     return (normalscreen ? screen1 : screen2)
 }
