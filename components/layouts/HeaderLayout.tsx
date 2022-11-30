@@ -1,5 +1,5 @@
-import { url } from "inspector";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import UserIcon from '../../public/usericon.png';
 import HeaderTitles from "./HeaderTitles";
@@ -9,7 +9,7 @@ interface clientProps {
     email?: string;
 }
 export default function HeaderLayout(props: clientProps) {
-
+    window.location.assign.
     const [dropdown, setDropDown] = useState<boolean>(false)
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false)
 
@@ -31,7 +31,7 @@ export default function HeaderLayout(props: clientProps) {
         return (
             <div>
                 <button className="bg-gray-400 text-black h-6 w-full font-semibold text-sm rounded-sm text-center mb-2">
-                    <a href="/loggedIn">Entre</a>
+                    <Link href="/loggedIn">Entre</Link>
                 </button>
             </div>
         )
@@ -39,22 +39,22 @@ export default function HeaderLayout(props: clientProps) {
     let screen1 = <>
         <div className="flex justify-between bg-transparent text-white font-normal transition px-4 relative" >
             <div>
-                <a href="/landingpage" >
+                <Link href="/landingpage" >
                     <Image src="https://aluno.uniftc.edu.br/assets/images/uniftc-branco.png" 
                     style={{minWidth: 60, minHeight: 20}}
                     width={80} height={60} alt="Logo da FTC" />
-                </a>
+                </Link>
             </div>
 
             <ul className="flex font-medium -ml-4">
                 <li className="mx-4 px-2 py-1.5 rounded-lg hover:text-sky-600 hover:bg-white">
-                    <a href={props.username ? '/loggedIn' : '/landingpage'}>Início</a>
+                    <Link href={props.username ? '/loggedIn' : '/landingpage'}>Início</Link>
                 </li>
                 <li className="mx-4 px-2 py-1.5 rounded-lg hover:text-sky-600 hover:bg-white">
-                    <a href="/cursos">Cursos</a>
+                    <Link href="/cursos">Cursos</Link>
                 </li>
                 <li className="mx-4 px-2 py-1.5 rounded-lg hover:text-sky-600 hover:bg-white">
-                    <a href="/about">Sobre</a>
+                    <Link href="/about">Sobre</Link>
                 </li>
             </ul>
             <button id="dropdownAvatarNameButton" onClick={ToggleDropdown} data-dropdown-toggle="dropdownAvatarName"
@@ -72,11 +72,11 @@ export default function HeaderLayout(props: clientProps) {
                 </div>
                 <ul className={`${props.username ? 'block' : 'hidden'} py-1 text-sm text-gray-700 dark:text-gray-200`}>
                     <li>
-                        <a href="/cursos" className={`py-2 px-4 text-blue-300 text-base block hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}>Meus cursos</a>
+                        <Link href="/cursos" className={`py-2 px-4 text-blue-300 text-base block hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white`}>Meus cursos</Link>
                     </li>
                 </ul>
                 <div className="py-1">
-                    <a href="/" className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Desconectar</a>
+                    <Link href="/" className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Desconectar</Link>
                 </div>
             </div>
         </div>
@@ -87,9 +87,9 @@ export default function HeaderLayout(props: clientProps) {
     let screen2 = <>
         <div className="flex items-center justify-between border-b border-gray-400 py-8">
             <div>
-                <a href="/landingpage">
+                <Link href="/landingpage">
                     <Image src="https://aluno.uniftc.edu.br/assets/images/uniftc-branco.png" width={100} height={100} className="w-full h-fit" alt="Logo da FTC" />
-                </a>
+                </Link>
             </div>
 
             <nav>
@@ -118,13 +118,13 @@ export default function HeaderLayout(props: clientProps) {
                         </div>
                         <ul className="flex flex-col items-center justify-between min-h-[250px] font-medium leading-none">
                             <li className={hamburguerItem}>
-                                <a href="/loggedIn">Início</a>
+                                <Link href="/loggedIn">Início</Link>
                             </li>
                             <li className={hamburguerItem}>
-                                <a href="/cursos">Cursos</a>
+                                <Link href="/cursos">Cursos</Link>
                             </li>
                             <li className={hamburguerItem} style={{backgroundColor: "#922"}}>
-                                <a href="/">Sair</a>
+                                <Link href="/">Sair</Link>
                             </li>
                         </ul>
                     </div>
