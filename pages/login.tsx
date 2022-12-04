@@ -1,60 +1,43 @@
+import { useForm } from "react-hook-form";
+import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
-import Imagetest from '../../assets_test/testing-img-home.png'
-import Ftclogo from '../../assets_test/ftc-logo.svg'
-import styles from '../styles/Home.module.css'
 
-interface Props {
-  children: React.ReactNode;
-}
+type FormData = {
+  login: string;
+  password: string;
+};
 
-const HomeLayout = ({ children }: Props) => {
-  return <div className='flex items-center justify-center w-full h-screen text-black text-sm font-light bg-blue-50'>
-    {children}
-    
-    <div className="flex items-center flex-col justify-center w-full">
 
-      <Image
-        src={Ftclogo}
-        quality={100}
-        alt="Logo da FTC"
-        className={styles.logoStyle}
-      />
+function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+  const onSubmit = handleSubmit((data) => {
+    signIn('plabos', {
+      login: data.login,
+      password: data.password
+    })
+  });
 
-      <form
-        className='w-48 relative'
-        action=""
-        method="post">
-        <label
-          className='mb-6 font-normal'
-          htmlFor="username">Usuário:</label><br></br>
-        <input
-          type="email" name="username" id="username"
-          className={styles.inputStyle} /><br></br>
-
-        <label
-          className='mb-6 font-normal'
-          htmlFor="password">Senha:</label><br></br>
-        <input
-          type="password" name="password" id="password"
-          className={styles.inputStyle} />
-
-        <button
-          className="bg-blue-600 text-white font-semibold w-full h-8 rounded-md mt-4 active:bg-blue-800"
-          type="submit">
-            <a href='/landingpage'>Conectar</a>
+  return (
+    <main className="flex w-full h-screen">
+      <div className="flex flex-col items-center justify-center w-full lg:w-1/2">
+        <img src='/ftc_logo_v.png' alt='Logo FTC' className="mb-8" />
+        <form onSubmit={onSubmit} className='flex flex-col w-full px-16 md:px-32 lg:px-0 lg:w-3/4 xl:w-2/4' >
+          <label className='mt-4 mb-1 text-lg text-gray-600'>Login</label>
+          <input {...register("login", { required: true })} className='px-4 py-2 border border-gray-300 rounded-md border-opacity-70'/>
+          <label className='mt-4 mb-1 text-lg text-gray-600'>Senha</label>
+          <input type='password' {...register("password", { required: true })} className='px-4 py-2 border border-gray-300 rounded-md'/>
+          <button className="w-full px-6 py-3 my-6 text-white bg-blue-600 rounded-md" >
+            Conectar
           </button>
-      </form>
-
-    </div>
-    <div className="items-center w-full h-full hidden sm:flex">
-      <Image
-        className="w-full h-full"
-        src={Imagetest}
-        alt="Mulher sorrindo, olhando para trás, segurando uma mão."
-        quality={100}
-        objectFit="fill" />
-    </div>
-  </div>
+        </form>
+      </div>
+      <div className="items-center justify-center hidden w-full bg-blue-600 lg:flex md:w-1/2" style={{backgroundImage: `url(/login_banner.png)`, backgroundPosition: 'center', backgroundSize: 'cover'}} />
+    </main>
+  );
 }
 
-export default HomeLayout
+export default Login;
