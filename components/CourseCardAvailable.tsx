@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type Props = {};
 
 function CourseCardAvailable({}: Props) {
@@ -54,9 +56,11 @@ function CourseCardAvailable({}: Props) {
         Desenvolvimento de Apps Comerciais com Python e Kivy para Android, iOS,
         Windows, Linux e MacOS (Básico ao Avançado)
       </p>
-      <button className="bg-[#1294F2] text-white rounded-md w-full py-2">
-        Matricular
-      </button>
+      <Link href={"/cursos-lista"}>
+        <button className="bg-[#1294F2] text-white rounded-md w-full py-2">
+          Matricular
+        </button>
+      </Link>
     </div>
   );
 }
