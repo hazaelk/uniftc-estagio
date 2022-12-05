@@ -1,4 +1,4 @@
-import CourseCard from "@/components/CourserCard";
+import CourseCard from "@/components/CourseCard";
 import Layout from "@components/layouts/Default";
 
 type Props = {};

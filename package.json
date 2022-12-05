@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.4",
     "@testing-library/react": "^13.4.0",
     "@types/next-auth": "^3.15.0",
     "eslint": "8.27.0",
