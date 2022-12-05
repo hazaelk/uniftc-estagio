@@ -1,48 +1,64 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
 
-export const authOptions = {
+export default NextAuth({
+  session: {
+    strategy: 'jwt',
+    maxAge: 24 * 60 * 60 * 3 // 3 days
+  },
   providers: [
     CredentialsProvider({
-      id: "plabos",
+      name: 'plabos',
       credentials: {
-        email: { label: "Email", type: "string" },
-        password: { label: "Password", type: "password" },
+        login: { label: 'Login', type: 'text' },
+        password: { labe: 'Password', type: 'password' }
       },
+      id: 'plabos',
+      type: 'credentials',
       async authorize(credentials, req) {
-        console.log("credentials", credentials)
-       // Return user object
-       return {
-        username: 'nodge',
-        token: '1234'
-       }
-      },
-    }),
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`, {
+          method: 'POST',
+          body: JSON.stringify({
+            login: credentials.login,
+            password: credentials.password
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+
+        const payload = await res.json()
+        console.log("Login payload:", payload)
+        if (payload) {
+          return payload
+        }
+
+        throw new Error(payload.detail)
+      }
+    })
   ],
-  secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/login",
-  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        return {
-          user: user,
-          accessToken: token.accessToken,
-          refreshToken: token.refreshToken,
-        };
+        token.access_token = user.access_token
+        token.name = user.name
+        token.login = user.login
+        token.id = user.id
       }
-
-      return token;
+      return token
     },
-    async session({ session, token }) {
-      session.user = token.user;
-      session.accessToken = token.accessToken;
-      session.refreshToken = token.refreshToken;
-      session.accessTokenExpires = token.accessTokenExpires;
-      return session;
-    },
+    async session({ session, token, user }) {
+      session.user = {
+        login: token.login,
+        id: Number(token.id), // This is dumb, but i did it anyway.
+        access_token: token.access_token,
+        name: token.name
+      }
+      return session
+    }
   },
-};
-
-export default NextAuth(authOptions);
+  pages: {
+    signIn: '/login',
+    error: '/'
+  }
+})
