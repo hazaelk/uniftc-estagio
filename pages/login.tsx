@@ -1,25 +1,55 @@
 import { useForm } from "react-hook-form";
 import { signIn, useSession } from 'next-auth/react'
-import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { FormEvent, useEffect, useState } from 'react'
+import Link from "next/link";
 
 type FormData = {
   login: string;
   password: string;
 };
 
+const responsesi18n = {
+  'CredentialsSignin': 'Login ou senha incorretos',
+  'Incorrect username or password': 'Usuário ou senha incorretos'
+}
 
 function Login() {
+  const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
+  const session = useSession()
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-  const onSubmit = handleSubmit((data) => {
+  
+  const onSubmit = (e:FormEvent) => { e.preventDefault() }
+  const onLogin = handleSubmit( data => {
     signIn('plabos', {
+      redirect: false,
       login: data.login,
       password: data.password
     })
-  });
+    .then( (response) =>{
+      if (response?.error) {
+        setError(response.error)
+      } else {
+        setError(null)
+        router.push('/')
+      }
+    })
+  })
+
+  if (session.status === 'loading') {
+    return <div className="flex items-center justify-center w-full h-screen">Carregando...</div>
+  }
+  
+  if (session.status === 'authenticated') {
+    router.push('/')
+    return <> </>
+  }
 
   return (
     <main className="flex w-full h-screen">
@@ -30,9 +60,15 @@ function Login() {
           <input {...register("login", { required: true })} className='px-4 py-2 border border-gray-300 rounded-md border-opacity-70'/>
           <label className='mt-4 mb-1 text-lg text-gray-600'>Senha</label>
           <input type='password' {...register("password", { required: true })} className='px-4 py-2 border border-gray-300 rounded-md'/>
-          <button className="w-full px-6 py-3 my-6 text-white bg-blue-600 rounded-md" >
-            Conectar
-          </button>
+          {error && <p className='mt-4 text-red-500'>{error}</p>}
+          <p className="flex flex-row w-full">
+            <Link href='/register'>
+              <button className="px-6 py-3 my-6 mr-2 text-black duration-300 rounded-md w-min hover:bg-blue-600 hover:text-white" > Registrar </button>
+            </Link>
+            <button className="w-full px-6 py-3 my-6 ml-2 text-white duration-300 bg-blue-600 rounded-md hover:bg-blue-400" onClick={onLogin}>
+              Conectar
+            </button>
+          </p>
         </form>
       </div>
       <div className="items-center justify-center hidden w-full bg-blue-600 lg:flex md:w-1/2" style={{backgroundImage: `url(/login_banner.png)`, backgroundPosition: 'center', backgroundSize: 'cover'}} />
