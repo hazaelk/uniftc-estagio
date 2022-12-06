@@ -1,18 +1,43 @@
-import CourseCard from "@/components/CourseCard";
-import CourseCardAvailable from "@/components/CourseCardAvailable";
 import CourseCardMy from "@/components/CourseCardMy";
 import Layout from "@components/layouts/Default";
+import { useSession } from "next-auth/react";
+import {useRouter} from "next/router";
+import { useEffect, useState } from "react";
+import Link from 'next/link'
 
 type Props = {};
 
 function Cursos({}: Props) {
+  const session = useSession() as any
+  const [courses, setCourses] = useState<any[]>([]);
+  const router = useRouter()
+  console.log(session.data)
+  useEffect(()=>{
+    async function fetchCourses() {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/learning/${session.data?.user.id}`);
+      const data = await response.json();
+      setCourses(data);
+    }
+    fetchCourses();
+  }, [session.data])
+
+  
+  if (session.status === 'loading') {
+    return <div className="flex items-center justify-center w-full h-screen">Carregando...</div>
+  }
+  
+  if (session.status === 'unauthenticated') {
+    router.push('/')
+    return <> </>
+  }
+
   return (
     <Layout>
-      <section className="flex px-6 justify-center items-center flex-col text-white bg-blue-600 pt-6 pb-10">
+      <section className="flex flex-col items-center justify-center px-6 pt-6 pb-10 text-white bg-blue-600">
         <h1 className="text-4xl font-medium text-center">Meus Cursos</h1>
       </section>
-      <section className="px-6 md:px-14 lg:px-24 mt-10 pb-10">
-        <h2 className="text-xl md:text-2xl font-semibold mb-6">Filtros</h2>
+      <section className="px-6 pb-10 mt-10 md:px-14 lg:px-24">
+        <h2 className="mb-6 text-xl font-semibold md:text-2xl">Filtros</h2>
         <div className="flex gap-2 mb-4">
           <button className="flex items-center text-[#4F4F4F] justify-center rounded-md px-4 py-1 text-sm border border-[#D3D2D2]">
             Categoria
@@ -22,7 +47,7 @@ function Cursos({}: Props) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="ml-2 -mr-1 h-4 w-4"
+              className="w-4 h-4 ml-2 -mr-1"
             >
               <path
                 strokeLinecap="round"
@@ -39,7 +64,7 @@ function Cursos({}: Props) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="ml-2 -mr-1 h-4 w-4"
+              className="w-4 h-4 ml-2 -mr-1"
             >
               <path
                 strokeLinecap="round"
@@ -49,9 +74,10 @@ function Cursos({}: Props) {
             </svg>
           </button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <CourseCardMy />
-          <CourseCardMy />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {courses.map((course) => {
+            return <Link href="/watch/" key={course.id}><CourseCardMy /></Link>
+          })}
         </div>
       </section>
     </Layout>
