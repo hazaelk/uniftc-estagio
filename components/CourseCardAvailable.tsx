@@ -1,24 +1,30 @@
 import Link from "next/link";
 
-type Props = {};
+type Props = {
+  title: string,
+  tags?: string[],
+  cover?: string[],
+  author: number,
+  description: string,
+  id: number
+};
 
-function CourseCardAvailable({}: Props) {
+function CourseCardAvailable({title, tags, cover, author, description, id}: Props) {
   return (
     <div className="bg-white shadow-md rounded-lg p-4 text-[#121212]">
       <img
         alt=""
-        className="w-full h-32 object-cover rounded-md mb-4"
-        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
+        className="object-cover w-full h-32 mb-4 rounded-md"
+        src="https://source.unsplash.com/random/?Technology"
       />
       <div className="mb-4 flex text-[10px] items-center gap-2">
-        <p className="bg-blue-100 px-2 py-1 rounded border border-blue-200">
-          Desenvolvimento
-        </p>
-        <p className="bg-blue-100 px-2 py-1 rounded border border-blue-200">
-          Inteligencia Artificial
-        </p>
+        {tags?.map( tag => {
+          return <p className="px-2 py-1 bg-blue-100 border border-blue-200 rounded" key={tag}>
+            {tag}
+          </p>
+        })}
       </div>
-      <div className="flex justify-between text-xs text-[#828282] mb-2">
+      {/* <div className="flex justify-between text-xs text-[#828282] mb-2">
         <span className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,15 +54,14 @@ function CourseCardAvailable({}: Props) {
               clipRule="evenodd"
             />
           </svg>
-          <p>Fernado R.</p>
+          <p>[Author]</p>
         </span>
-      </div>
-      <p className="font-semibold mb-2 text-lg">Ciência da Computação</p>
-      <p className="text-sm mb-4">
-        Desenvolvimento de Apps Comerciais com Python e Kivy para Android, iOS,
-        Windows, Linux e MacOS (Básico ao Avançado)
+      </div> */}
+      <p className="mb-2 text-lg font-semibold">{title}</p>
+      <p className="mb-4 text-sm">
+       {description}
       </p>
-      <Link href={"/cursos-lista"}>
+      <Link href={`/course/${id}`}>
         <button className="bg-[#1294F2] text-white rounded-md w-full py-2">
           Matricular
         </button>

@@ -1,32 +1,48 @@
+import { useEffect, useState } from 'react'
 import CourseCard from "@/components/CourseCard";
 import CourseCardAvailable from "@/components/CourseCardAvailable";
 import CourseCardMy from "@/components/CourseCardMy";
 import Layout from "@components/layouts/Default";
 import Link from "next/link";
+import { useRouter } from 'next/router';
 
 type Props = {};
 
 function Cursos({}: Props) {
+  const router = useRouter()
+  const { id } = router.query
+  const [course, setCourse] = useState({ title: 'título', id: 0, description: 'descrição', author_id: 'autor' });
+  
+  useEffect(()=>{
+    async function fetchCourses() {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/id/${id}`);
+      const data = await response.json();
+      setCourse(data);
+    }
+    fetchCourses();
+  }, [id])
+
+
+
   return (
     <Layout>
-      <div className="flex md:flex-row flex-col bg-white shadow-md p-4 gap-8 text-[#121212]">
+      <div className="flex md:flex-row flex-col bg-white shadow-md p-4 gap-8 text-[#121212] w-full">
         <div>
           <img
             alt=""
-            className="h-full w-full object-cover aspect-video rounded-md"
+            className="object-cover w-full h-full rounded-md aspect-video"
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
           />
         </div>
         <div>
-          <div className="mb-4 flex text-[10px] items-center gap-2">
-            <p className="bg-blue-100 px-2 py-1 rounded border border-blue-200">
-              Desenvolvimento
+         {/*  <div className="mb-4 flex text-[10px] items-center gap-2">
+            <p className="px-2 py-1 bg-blue-100 border border-blue-200 rounded">
             </p>
-            <p className="bg-blue-100 px-2 py-1 rounded border border-blue-200">
+            <p className="px-2 py-1 bg-blue-100 border border-blue-200 rounded">
               Inteligencia Artificial
             </p>
-          </div>
-          <div className="flex justify-between text-xs text-[#828282] mb-2">
+          </div> */}
+          {/* <div className="flex justify-between text-xs text-[#828282] mb-2">
             <span className="flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,26 +72,25 @@ function Cursos({}: Props) {
                   clipRule="evenodd"
                 />
               </svg>
-              <p>Fernado R.</p>
+              <p>[Author]</p>
             </span>
-          </div>
-          <p className="font-semibold mb-2 text-lg">Ciência da Computação</p>
-          <p className="text-sm mb-4">
-            Desenvolvimento de Apps Comerciais com Python e Kivy para Android,
-            iOS, Windows, Linux e MacOS (Básico ao Avançado)
+          </div> */}
+          <p className="mb-2 text-lg font-semibold">{course.title}</p>
+          <p className="mb-4 text-sm">
+            {course.description}
           </p>
-          <button className="bg-[#1294F2] text-white rounded-md w-full py-2">
+          <button className="bg-[#1294F2] text-white rounded-md w-full py-2" onClick={()=>{router.push('/meus-cursos')}}>
             Matricular
           </button>
         </div>
       </div>
-      <h2 className="bg-white p-4 text-xl font-medium">Lista de aulas</h2>
+      <h2 className="p-4 text-xl font-medium bg-white">Lista de aulas</h2>
       <Link href={"/aula"}>
         <div className="flex md:flex-row flex-col bg-white shadow-md p-4 gap-8 text-[#121212]">
           <div className="w-1/5">
             <img
               alt=""
-              className="h-full object-cover aspect-video rounded-md"
+              className="object-cover h-full rounded-md aspect-video"
               src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
             />
           </div>
