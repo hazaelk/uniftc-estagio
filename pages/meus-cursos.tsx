@@ -26,10 +26,10 @@ function Cursos({}: Props) {
     return <div className="flex items-center justify-center w-full h-screen">Carregando...</div>
   }
   
-  if (session.status === 'unauthenticated') {
-    router.push('/')
-    return <> </>
-  }
+  // if (session.status === 'unauthenticated') {
+  //   router.push('/')
+  //   return <> </>
+  // }
 
   return (
     <Layout>
@@ -72,6 +72,7 @@ function Cursos({}: Props) {
                 d="M19.5 8.25l-7.5 7.5-7.5-7.5"
               />
             </svg>
+            
           </button>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
