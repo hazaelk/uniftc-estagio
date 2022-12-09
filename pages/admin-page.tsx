@@ -1,10 +1,10 @@
-import CourseCardAvailable from "@/components/CourseCardAvailable";
+import CourseCardAvailable, { PropsCard } from "@/components/CourseCardAvailable";
 import Layout from "@components/layouts/Default";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-type Props = {};
+type Props = {}
 
 function AdminPage({ }: Props) {
 
@@ -23,7 +23,7 @@ function AdminPage({ }: Props) {
         console.log(value)
     }
 
-    const [idFilter, setIdFilter] = useState<number>()
+    const [idFilter, setIdFilter] = useState<number>(0)
     const selectChangeIdFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
         const valueId = Number(e.target.value)
         setIdFilter(valueId)
@@ -32,28 +32,20 @@ function AdminPage({ }: Props) {
 
     //session and connection to database to filter
     const session = useSession() as any
-    const [courses, setCourses] = useState<any[]>([]);
+    const [courses, setCourses] = useState<any>([]);
     const router = useRouter()
-
 
     async function getFilterCourseByAuthorId() {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/author/id/${idFilter}`);
         const data = await response.json();
         setCourses(data);
-        console.log('author')
-        console.log(data)
     }
-
 
     async function getFilterCourseByCourseId() {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/id/${idFilter}`);
         const data = await response.json();
         setCourses(data);
-        console.log('curso')
-        console.log(data)
     }
-
-
 
     if (session.status === 'loading') {
         return <div className="flex items-center justify-center w-full h-screen">Carregando...</div>
@@ -99,21 +91,21 @@ function AdminPage({ }: Props) {
                 </div>
                 <div className={`${courses.length === 0 ? 'hidden' : 'block'} border-t-2 border-b-4 h-full border-sky-700`}>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {/* {`${currentElementFilter}` === 'course_id' ? ((course: any) => {
-                            <CourseCardAvailable id={course.id} title={course.title} author={course.author}
-                            description={course.description} key={course.id} />
 
-                        }
-                        ) : (
-                        <>
-                        </>)} */}
-                        {courses.map(course => (
+                        {currentElementFilter === 'course_id' ? (
                             <div className="flex flex-col">
-                                <CourseCardAvailable id={course.id} title={course.title} author={course.author}
-                                description={course.description} key={course.id} />
-                                
+                                <CourseCardAvailable id={courses.id} title={courses.title} author={courses.author} description={courses.description} key={courses.id} />
                             </div>
-                        ))}
+                        ) : (
+                            //@ts-expect-error
+                            courses.map(course => (
+                                <div className="flex flex-col">
+                                    <CourseCardAvailable id={course.id} title={course.title} author={course.author}
+                                        description={course.description} key={course.id} />
+                                </div>
+                            ))
+                        )
+                        }
                     </div>
                 </div>
             </section>
