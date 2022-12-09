@@ -43,42 +43,7 @@ function Cursos({}: Props) {
         <h2 className="mb-6 text-xl font-semibold md:text-2xl">
         Todos os cursos
         </h2>
-        {/* <div className="flex gap-2 mb-4">
-          <button className="flex items-center text-[#4F4F4F] justify-center rounded-md px-4 py-1 text-sm border border-[#D3D2D2]">
-            Categoria
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-4 h-4 ml-2 -mr-1"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-              />
-            </svg>
-          </button>
-          <button className="flex items-center text-[#4F4F4F] justify-center rounded-md px-4 py-1 text-sm border border-[#D3D2D2]">
-            Ordem
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-4 h-4 ml-2 -mr-1"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-              />
-            </svg>
-          </button>
-        </div> */}
+        
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {courses.map(course => (
             <CourseCardAvailable

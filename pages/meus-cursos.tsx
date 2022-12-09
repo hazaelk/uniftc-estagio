@@ -72,6 +72,7 @@ function Cursos({}: Props) {
                 d="M19.5 8.25l-7.5 7.5-7.5-7.5"
               />
             </svg>
+            
           </button>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">

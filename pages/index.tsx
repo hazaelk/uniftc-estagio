@@ -1,6 +1,7 @@
 import CourseCard from "@/components/CourseCard";
 import Layout from "@components/layouts/Default";
 
+
 type Props = {};
 
 function Index({}: Props) {
@@ -15,19 +16,19 @@ function Index({}: Props) {
       <section className="-mt-28 md:-mt-48">
         <div className="flex justify-center px-6 lg:justify-between gap-4 md:gap-8 flex-wrap md:px-14 lg:px-24">
           <img
-            alt=""
-            className="md:w-[30%] w-32 object-cover rounded-lg "
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
+            alt="Mulher sorrindo."
+            className="md:w-[30%] w-28 object-cover rounded-lg "
+            src='/img_pic1.png'
           />
           <img
-            alt=""
-            className="md:w-[30%] w-32 object-cover rounded-lg"
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
+            alt="Mulher sorrindo."
+            className="md:w-[30%] w-28 object-cover rounded-lg"
+            src='/img_pic2.png'
           />
           <img
-            alt=""
-            className="md:w-[30%] w-32 object-cover rounded-lg"
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
+            alt="Mulher sorrindo."
+            className="md:w-[30%] w-28 object-cover rounded-lg"
+            src='/img_pic3.png'
           />
         </div>
       </section>

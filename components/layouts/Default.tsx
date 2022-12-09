@@ -40,7 +40,9 @@ function DefaultLayout({ children }: Props) {
             <Menu as="div" className="relative inline-block text-left ">
               <Menu.Button>
                 <div className="flex items-center h-full px-4 py-2 duration-300 rounded-md cursor-pointer hover:bg-opacity-10 hover:bg-white">
-                  <span className="mr-3 font-semibold">{session.data.user?.name}</span>
+                  <Link href={'/admin-page'}>
+                    <span className="mr-3 font-semibold">{session.data.user?.name}</span>
+                  </Link>
                   <Image
                     src="/user_placeholder.png"
                     alt="Foto usuário"
@@ -50,7 +52,7 @@ function DefaultLayout({ children }: Props) {
                   />
                 </div>
               </Menu.Button>
-              <Menu.Items className="absolute right-0 mt-2 text-black origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg w-72 focus:outline-none">
+              <Menu.Items className="absolute right-0 mt-2 z-10 text-black origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg w-72 focus:outline-none">
                 <div className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
