@@ -26,10 +26,10 @@ function Cursos({}: Props) {
     return <div className="flex items-center justify-center w-full h-screen">Carregando...</div>
   }
   
-  // if (session.status === 'unauthenticated') {
-  //   router.push('/')
-  //   return <> </>
-  // }
+  if (session.status === 'unauthenticated') {
+    router.push('/')
+    return <> </>
+  }
 
   return (
     <Layout>
