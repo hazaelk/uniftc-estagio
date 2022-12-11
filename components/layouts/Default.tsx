@@ -3,13 +3,23 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from "next/router";
 
 type Props = {
   children: React.ReactNode;
+  protect?: boolean;
 };
 
-function DefaultLayout({ children }: Props) {
+function DefaultLayout({ children, protect }: Props) {
   const session = useSession()
+  const router = useRouter()
+  
+
+  if (protect && session.status === 'unauthenticated') {
+    router.push('/')
+    return <> </>
+  }
+
 
   return (
     <div>
@@ -29,9 +39,9 @@ function DefaultLayout({ children }: Props) {
               Início
             </li>
           </Link>
-          <Link href={"/cursos"}>
+          <Link href={"/courses"}>
             <li className="mx-4 transition-opacity duration-300 cursor-pointer opacity-70 hover:opacity-100">
-              Cursos
+              Cursos disponíveis
             </li>
           </Link>
         </ul>
@@ -52,7 +62,7 @@ function DefaultLayout({ children }: Props) {
                   />
                 </div>
               </Menu.Button>
-              <Menu.Items className="absolute right-0 mt-2 z-10 text-black origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg w-72 focus:outline-none">
+              <Menu.Items className="absolute right-0 z-10 mt-2 text-black origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg w-72 focus:outline-none">
                 <div className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
