@@ -61,7 +61,7 @@ function Cursos({course, lessons}: Props) {
       </div>
       <h2 className="p-4 text-xl font-medium bg-gray-100">Aulas:</h2>
       {lessons.map((lesson) => {
-        return <Link href={`/watch/${lesson.id}`} key={lesson.id}>
+        return <Link href={`/watch/${course.id}/${lesson.id}`} key={lesson.id}>
           <div className="flex md:flex-row flex-col bg-white shadow-md p-4 gap-8 text-[#121212] hover:bg-gray-400 duration-300 my-2 mx-2 rounded-md">
             <div className="w-4/5">
               <p className="font-semibold">
