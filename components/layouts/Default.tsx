@@ -67,7 +67,7 @@ function DefaultLayout({ children, protect }: Props) {
                   <Menu.Item>
                     {({ active }) => (
                       <Link
-                        href="/meus-cursos"
+                        href="/mycourses"
                         className={`${
                           active ? "bg-gray-100 text-gray-900" : "text-gray-900"
                         }  flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm`}
