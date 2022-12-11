@@ -1,11 +1,27 @@
-type Props = {}
+import { useRouter } from "next/router";
 
-function CourseCard({}: Props) {
+type Props = {
+  title: string;
+  description: string;
+  image_url: string;
+  id: number;
+  categories: {
+    name: string;
+    id: number;
+  }[];
+  user: {
+    name: string
+  }
+}
+
+function CourseCard({title, description, image_url, categories, user, id}: Props) {
+  const router = useRouter()
+
   return (
     <div className="bg-white shadow-md rounded-lg p-8 pt-6 text-[#121212]">
-      <p className="font-semibold mb-4 text-lg">Nome do curso</p>
+      <p className="mb-4 text-lg font-semibold">{title}</p>
       <div className="flex justify-between text-sm text-[#828282] mb-4">
-        <span className="flex items-center">
+        {/* <span className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -21,7 +37,7 @@ function CourseCard({}: Props) {
           </svg>
 
           <p className="">1 de Janeiro, 2023</p>
-        </span>
+        </span> */}
         <span className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -35,33 +51,33 @@ function CourseCard({}: Props) {
               clipRule="evenodd"
             />
           </svg>
-          <p>Professor</p>
+          <p>{user.name}</p>
         </span>
       </div>
-      <div className="flex flex-col mb-4">
+      {/* <div className="flex flex-col mb-4">
         <p className="font-medium">Matriculados</p>
-        <div className="mt-4 flex items-center">
-          <div className="flex -space-x-2 mr-2">
+        <div className="flex items-center mt-4">
+          <div className="flex mr-2 -space-x-2">
             <img
-              className="rounded-full w-12 h-12 border-2 object-cover border-white"
+              className="object-cover w-12 h-12 border-2 border-white rounded-full"
               src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100&q=80"
               alt=""
             />
             <img
-              className="rounded-full w-12 h-12 border-2 object-cover border-white"
+              className="object-cover w-12 h-12 border-2 border-white rounded-full"
               src="https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100&q=80"
               alt=""
             />
             <img
-              className="rounded-full w-12 h-12 border-2 object-cover border-white"
+              className="object-cover w-12 h-12 border-2 border-white rounded-full"
               src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100&q=80"
               alt=""
             />
           </div>
           <div className="text-sm ">+ 25 Alunos</div>
         </div>
-      </div>
-      <button className="bg-[#1294F2] text-white rounded-lg w-full py-2">
+      </div> */}
+      <button className="bg-[#1294F2] text-white rounded-lg w-full py-2" onClick={()=>{router.push(`/course/${id}`)}}>
         Ver mais
       </button>
     </div>
