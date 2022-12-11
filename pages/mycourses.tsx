@@ -13,13 +13,19 @@ function Cursos({}: Props) {
   const router = useRouter()
   console.log(session.data)
   useEffect(()=>{
+    if (!session || !session.data) { return };
+    
     async function fetchCourses() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/learning/${session.data?.user.id}`);
-      const data = await response.json();
-      setCourses(data);
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/learning/${session.data?.user.id}`);
+        const data = await response.json();
+        setCourses(data);
+      } catch(e) {
+        console.error(e)
+      }
     }
     fetchCourses();
-  }, [session.data])
+  }, [session])
 
   
   if (session.status === 'loading') {
@@ -30,7 +36,7 @@ function Cursos({}: Props) {
     router.push('/')
     return <> </>
   }
-
+  
   return (
     <Layout>
       <section className="flex flex-col items-center justify-center px-6 pt-6 pb-10 text-white bg-blue-600">
@@ -76,7 +82,7 @@ function Cursos({}: Props) {
           </button>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {courses.map((course) => {
+          { courses && Array.isArray(courses) && courses.map((course) => {
             return <Link href="/watch/" key={course.id}><CourseCardMy /></Link>
           })}
         </div>
