@@ -1,22 +1,25 @@
-import { useEffect, useState } from 'react'
-import CourseCard from "@/components/CourseCard";
 import CourseCardAvailable from "@/components/CourseCardAvailable";
-import CourseCardMy from "@/components/CourseCardMy";
 import Layout from "@components/layouts/Default";
 
-type Props = {};
-
-function Cursos({}: Props) {
-  const [courses, setCourses] = useState<any[]>([]);
-  
-  useEffect(()=>{
-    async function fetchCourses() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course`);
-      const data = await response.json();
-      setCourses(data);
+type Props = {
+  courses: {
+    title: string,
+    course_load: number,
+    author_id: number,
+    description: string,
+    image_url: string,
+    id: number,
+    categories: {
+        name: string,
+        id: number
+      }[],
+    user: {
+      name: string
     }
-    fetchCourses();
-  }, [])
+  }[]
+};
+
+function CourseList({courses}: Props) {
 
   return (
     <Layout>
@@ -28,12 +31,13 @@ function Cursos({}: Props) {
         Populares
         </h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {courses.map(course => (
+          {courses.reverse().map(course => (
             <CourseCardAvailable
               id={course.id}
               title={course.title}
-              author={course.author}
+              author={course.user.name}
               description={course.description}
+              cover={course.image_url}
               key={course.id} 
             />
           )).splice(0, 3)}
@@ -49,7 +53,7 @@ function Cursos({}: Props) {
             <CourseCardAvailable
               id={course.id}
               title={course.title}
-              author={course.author}
+              author={course.user.name}
               description={course.description}
               key={course.id} 
             />
@@ -60,4 +64,16 @@ function Cursos({}: Props) {
   );
 }
 
-export default Cursos;
+
+export async function getServerSideProps() {
+  let coursesData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course`)
+  coursesData = await coursesData.json()
+  return {
+    props: {
+      courses: coursesData
+    },
+  }
+}
+
+
+export default CourseList;
