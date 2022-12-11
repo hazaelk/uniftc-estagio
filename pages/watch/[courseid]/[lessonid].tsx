@@ -77,7 +77,7 @@ function Aulas({lessons, currentLesson}: Props) {
             </p>
           </div>
           <div className="flex items-center justify-center w-1/3 border-l border-black">
-            <p className="font-medium">{currentClassIndex+1}/{lessons.length} Aulas - {(currentClassIndex+1)/lessons.length*100}% concluído</p>
+            <p className="font-medium">{currentClassIndex+1}/{lessons.length} Aulas - {Math.round((currentClassIndex+1)/lessons.length*100)}% concluído</p>
             
           </div>
         </div>
