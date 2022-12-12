@@ -209,8 +209,6 @@ function Upload({course, lessons}:Props) {
           <input disabled={!!course} value={course && course.title} className='p-2 mb-2 rounded-md shadow-sm' {...register("title", { required: true })} />
           <label className='mb-1.5'>Descrição</label>
           <input disabled={!!course} value={course && course.description} className='p-2 mb-2 rounded-md shadow-sm' {...register("description", { required: true })} />
-          <label className='mb-1.5'>Categorias</label>
-          <input disabled={!!course} value={course?.categories.map(category => category.name)} className='p-2 mb-2 rounded-md shadow-sm' {...register("categories", { required: true })} />
           <label className='mb-1.5'>Imagem</label>
           <input disabled={!!course} className='p-2 mb-2 rounded-md shadow-sm' {...register("image", { required: true })} />
           <button disabled={!!course} className='px-2 py-2 text-white duration-300 bg-blue-600 rounded-md hover:bg-blue-400 disabled:bg-slate-600'>Enviar</button>
