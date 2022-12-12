@@ -57,12 +57,34 @@ function Cursos({course, lessons}: Props) {
   useEffect(checkIfHasCourse, [checkIfHasCourse])
 
   const subscribeToCourse = () => {
-    if (!session.data) { return}
-    if (!session.data.user) { return }
-    // @ts-expect-error
-    if (!session.data.user.id) { return }
+    return new Promise(async (resolve, reject) => {
+      if (!session.data) { reject(); return }
+      if (!session.data.user) { reject(); return }
+      // @ts-expect-error
+      if (!session.data.user.id) { reject(); return }
+      if (!router.query || !router.query.id) { reject(); return }
 
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registry/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          // @ts-expect-error
+          user_id: Number(session.data.user.id),
+          course_id: Number(router.query.id),
+          is_teacher: false
+        })
+      })
 
+      if (response.status !== 201) {
+        reject()
+        return
+      }
+      const data = await response.json()
+
+      resolve(data)
+    })
   }
 
   return (
@@ -91,10 +113,23 @@ function Cursos({course, lessons}: Props) {
           {/* IF NOT LOGGED, SHOW LOGIN PAGE FIRST */}
           <button className="bg-[#1294F2] text-white rounded-md w-full py-2" 
           onClick={()=>{
+            if (session.status === 'authenticated' && !hasCourse) {
+              subscribeToCourse()
+              .then(() => {
+                setHasCourse(true)
+                router.push('/mycourses')
+              })
+              .catch((e) => {
+                console.error(`Error subscribing to course:`, e)
+              })
+
+              return
+            }
+
             router.push(session.status === 'authenticated' 
             ? hasCourse
               ? `/watch/${course.id}/${lessons[0].id}`
-              : `/mycourses`
+              : `#`
             : '/login'   )
           }}>
             {session.status === 'authenticated' 
