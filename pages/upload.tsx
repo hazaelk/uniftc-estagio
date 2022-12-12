@@ -5,6 +5,7 @@ import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next';
 import Link from 'next/link'
+import { Dialog } from '@headlessui/react';
 
 type FormData = {
   title: string,
@@ -45,9 +46,11 @@ type Props = {
 function Upload({course, lessons}:Props) {
   const session = useSession()
   const [error, setError] = useState<string | null>(null)
-  const [lessonList, setLessonList] = useState<any[]>([])
+  let [isLessonModalOpen, setLessonModalOpen] = useState(true)
   const router = useRouter()
-  
+  const [lessonSource, setLessonSource] = useState<any>(null)
+  const [lessonName, setLessonName] = useState<any>(null)
+
   // @ts-expect-error
   if (session.status === 'authenticated' &&course && course.user.name !== session.data?.user.name) {
     console.log("THIS COURSE IS NOT YOURS")
@@ -128,8 +131,78 @@ function Upload({course, lessons}:Props) {
     })
   }
 
+
+
+  const handleFileChange = (event:any) => {
+    const file = event.target.files[0];
+    setLessonSource(file);
+  };
+
+  const handleLessonNameChange = (event:any) => {
+    setLessonName(event.target.value)
+  }
+
   
-  return (
+  return <>
+    <Dialog
+      open={isLessonModalOpen}
+      onClose={() => setLessonModalOpen(false)}
+      className="relative z-50"
+    >
+      {/* The backdrop, rendered as a fixed sibling to the panel container */}
+      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+
+      {/* Full-screen container to center the panel */}
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        {/* The actual dialog panel  */}
+        <Dialog.Panel className="w-full max-w-4xl p-4 mx-auto bg-white rounded">
+          <Dialog.Title>Upload aula</Dialog.Title>
+          <form 
+            className='flex flex-col w-full'
+            onSubmit={(e)=>{
+              e.preventDefault();
+              console.log(
+                "lessonName", lessonName,
+                "lessonSource", lessonSource,
+              )
+
+              if (!lessonName || !lessonSource) {
+                return
+              }
+
+              const formData = new FormData();
+              formData.append('file', lessonSource);
+              console.log(session.data)
+              console.log(session.data.user.access_token)
+              fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/upload`, {	
+                method: 'POST',
+                body: formData,
+                headers: {
+                  'lesson-name': lessonName,
+                  'course-id': router.query.id as string,
+                  //@ts-expect-error
+                  'Authorization': `Bearer ${session.data.user.access_token}`
+                }
+              })
+              .then(()=>{
+                router.reload()
+              })
+            }}
+          >
+            <label className='mb-1.5'  >Título</label>
+            <input className='p-2 mb-2 rounded-md shadow-sm lesson' onChange={handleLessonNameChange} />
+            <label className='mb-1.5' >Video</label>
+            <input
+              type="file"
+              className='lesson'
+              onChange={handleFileChange} 
+            />
+            {lessonSource && <video src={URL.createObjectURL(lessonSource)} controls className='my-4'></video> }
+            <button className='p-2 mt-4 text-white bg-blue-600 rounded-md'>Enviar</button>
+          </form>
+        </Dialog.Panel>
+      </div>
+    </Dialog>
     <DefaultLayout protect>
       <section className='flex flex-col w-full h-full mx-auto my-8 md:w-1/2'>
         {error && <div className='w-full p-2 my-4 text-white bg-red-500 rounded-md shadow-sm'>{error}</div> }
@@ -156,14 +229,14 @@ function Upload({course, lessons}:Props) {
             <button  
               className='w-full p-2 text-white duration-300 bg-blue-600 rounded-md hover:bg-blue-400'
               onClick={()=>{
-              
+                setLessonModalOpen(true)
               }}
             >Adicionar</button>
           </div>
         </>}
       </section>
     </DefaultLayout>
-  )
+  </>
 }
 
 export default Upload
