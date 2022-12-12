@@ -145,7 +145,7 @@ function Cursos({course, lessons}: Props) {
         return <Link href={`/watch/${course.id}/${lesson.id}`} key={lesson.id}>
           <div className={`flex md:flex-row flex-col px-12 py-6 gap-8 text-[#121212] hover:bg-gray-400 duration-300 ${index % 2 == 0 ? 'bg-slate-200' : 'bg-white border-t border-b border-black border-opacity-10' }`}>
             <div className="w-4/5">
-              <p className="font-semibold">
+              <p className="">
                 {lesson.name}
               </p>
             </div>

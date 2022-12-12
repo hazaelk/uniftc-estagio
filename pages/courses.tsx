@@ -55,6 +55,7 @@ function CourseList({courses}: Props) {
               title={course.title}
               author={course.user.name}
               description={course.description}
+              cover={course.image_url}
               key={course.id} 
             />
           ))}
