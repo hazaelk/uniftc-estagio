@@ -25,28 +25,39 @@ type Props = {
 function Index({courses}: Props) {
   return (
     <Layout>
-      <section className="flex flex-col items-center justify-center px-6 pt-6 pb-40 text-white bg-blue-600 md:pb-72">
+      <section className="relative flex flex-col items-center justify-center px-6 pt-6 pb-40 overflow-hidden z-[0] text-white bg-blue-600 md:pb-72">
+        <div 
+          className='absolute top-0 left-0 w-full h-full pointer-events-none z-[0]' 
+          style={{
+            backgroundImage: 'url(/pattern.png)',
+            backgroundPosition: 'left',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
         <h1 className="text-4xl font-medium text-center">PLabos</h1>
         <p className="mt-2 text-sm font-thin text-center opacity-70">
           Plataforma colaborativa de cursos online.
         </p>
       </section>
-      <section className="-mt-28 md:-mt-48">
+      <section className="-mt-28 md:-mt-48 z-[10] relative">
         <div className="flex flex-wrap justify-center gap-4 px-6 lg:justify-between md:gap-8 md:px-14 lg:px-24">
           <img
             alt="Mulher sorrindo."
             className="md:w-[30%] w-28 object-cover rounded-lg "
             src='/img_pic1.png'
+            draggable={false}
           />
           <img
             alt="Mulher sorrindo."
             className="md:w-[30%] w-28 object-cover rounded-lg"
             src='/img_pic2.png'
+            draggable={false}
           />
           <img
             alt="Mulher sorrindo."
             className="md:w-[30%] w-28 object-cover rounded-lg"
             src='/img_pic3.png'
+            draggable={false}
           />
         </div>
       </section>

@@ -9,9 +9,10 @@ type FormData = {
   password: string;
 };
 
-const responsesi18n = {
+const responsesi18n: {[key:string]: string} = {
   'CredentialsSignin': 'Login ou senha incorretos',
-  'Incorrect username or password': 'Usuário ou senha incorretos'
+  'Incorrect username or password': 'Usuário ou senha incorretos',
+  'ensure this value has at least 8 characters': 'A senha deve ter pelo menos 8 caracteres',
 }
 
 function Login() {
@@ -60,7 +61,7 @@ function Login() {
           <input {...register("login", { required: true })} className='px-4 py-2 border border-gray-300 rounded-md border-opacity-70'/>
           <label className='mt-4 mb-1 text-lg text-gray-600'>Senha</label>
           <input type='password' {...register("password", { required: true })} className='px-4 py-2 border border-gray-300 rounded-md'/>
-          {error && <p className='mt-4 text-red-500'>{error}</p>}
+          {error && <p className='mt-4 text-red-500'>{ responsesi18n[error] ? responsesi18n[error] : error }</p>}
           <p className="flex flex-row w-full">
             <Link href='/register'>
               <button className="px-6 py-3 my-6 mr-2 text-black duration-300 rounded-md w-min hover:bg-blue-600 hover:text-white" > Registrar </button>

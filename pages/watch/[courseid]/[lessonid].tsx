@@ -4,6 +4,7 @@ import "plyr-react/plyr.css";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { AiFillPlayCircle } from "react-icons/ai";
 
 type Props = {
   course: {
@@ -29,7 +30,7 @@ type Props = {
 };
 
 function Aulas({ lessons, currentLesson }: Props) {
-  const router = useRouter()
+  const router = useRouter();
   const [videoURL, setVideoURL] = useState<string | null>(null);
   const courseID = router.query.courseid as string;
   const lessonID = router.query.lessonid as string;
@@ -66,27 +67,39 @@ function Aulas({ lessons, currentLesson }: Props) {
             src={`${process.env.NEXT_PUBLIC_API_URL}/video/${currentClass?.video_uuid}`}
           />
         </div>
-        <section className="relative flex flex-col w-1/3 px-2 py-1 bg-blue-600">
-          <div className="h-full overflow-x-hidden overflow-y-auto bg-white bg-opacity-20">
-              {lessons.map((lesson) => {
-                return <Link href={`/watch/${courseID}/${lesson.id}`} key={lesson.id}>
-                  <div className={`flex md:flex-row flex-col ${lesson.id === Number(lessonID) ? 'bg-gray-300' : 'bg-white'} p-4 text-[#121212] hover:bg-gray-400 duration-300 my-1`}>
-                    <div className="w-4/5">
-                      <p className="font-semibold">
-                        {lesson.name}
-                      </p>
+        <section className="relative flex flex-col w-1/3 p-2">
+          <div className="h-full overflow-x-hidden overflow-y-auto">
+          <p className="py-4">Cronograma:</p>
+            {lessons.map((lesson) => {
+              return (
+                <Link href={`/watch/${courseID}/${lesson.id}`} key={lesson.id}>
+                  <div
+                    className={`flex md:flex-row flex-col ${
+                      lesson.id === Number(lessonID)
+                        ? "bg-blue-600 text-white"
+                        : "bg-white text-[#121212] px-4"
+                    }  hover:bg-gray-400 duration-300 mb-1 rounded overflow-hidden h-12`}
+                  >
+                    <div className="flex items-center w-4/5 overflow-hidden whitespace-nowrap">
+                      {lesson.id === Number(lessonID) && (
+                        <div className="flex items-center justify-center w-12 h-12 mr-3 bg-white aspect-square text-[#121212]">
+                          <AiFillPlayCircle className="text-blue-600" size={24} />
+                        </div>
+                      )}
+                      <p className="font-semibold">{lesson.name}</p>
                     </div>
                   </div>
                 </Link>
-              })}
+              );
+            })}
           </div>
-          <div className="flex w-full flex-col bg-white p-8 text-[#121212] self-end justify-self-end place-self-end bg-opacity-60">
-              <p className="font-medium">
-                {currentClassIndex + 1}/{lessons.length} Aulas -{" "}
-                {Math.round(((currentClassIndex + 1) / lessons.length) * 100)}%
-                concluído
-              </p>
-            </div>
+          <div className="flex w-full flex-col bg-white px-8 py-4 text-[#121212] self-end justify-self-end place-self-end bg-opacity-60 items-center justify-center">
+            <p className="font-medium">
+              {currentClassIndex + 1}/{lessons.length} Aulas -{" "}
+              {Math.round(((currentClassIndex + 1) / lessons.length) * 100)}%
+              de progresso 🥳!
+            </p>
+          </div>
         </section>
       </div>
     </Layout>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from "next/router";
+import { AiOutlineCloudUpload } from 'react-icons/ai'
 
 type Props = {
   children: React.ReactNode;
@@ -95,6 +96,26 @@ function DefaultLayout({ children, protect }: Props) {
                   </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
+                      <Link
+                        href="/upload"
+                        className={`${
+                          active ? "bg-gray-100 text-gray-900" : "text-gray-900"
+                        }  flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm`}
+                      >
+                        <div className="p-2 text-white bg-green-600 rounded-full">
+                          <AiOutlineCloudUpload size={24}/>
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold">Upload</p>
+                          <p className="text-[10px] leading-3">
+                            Adicione um novo curso a plataforma
+                          </p>
+                        </div>
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
                       <div
                         className={`${
                           active ? "bg-gray-100 text-gray-900" : "text-gray-900"
@@ -114,14 +135,12 @@ function DefaultLayout({ children, protect }: Props) {
                             />
                           </svg>
                         </div>
-                        <div className="cursor-pointer" onClick={()=>{
-                            signOut()
-                          }}>
+                        <Link href='/api/auth/signout' className="cursor-pointer" >
                           <p className="text-xs font-semibold" >Desconectar</p>
                           <p className="text-[10px] leading-3">
                             Faça logout do seu usuário
                           </p>
-                        </div>
+                        </Link>
                       </div>
                     )}
                   </Menu.Item>

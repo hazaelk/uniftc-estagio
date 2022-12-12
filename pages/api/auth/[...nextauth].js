@@ -29,6 +29,15 @@ export default NextAuth({
 
         const payload = await res.json()
         console.log("Login payload:", payload)
+
+        if (payload.detail) {
+          if (Array.isArray(payload.detail)) {
+            throw new Error(payload.detail[0].msg)
+          } else {
+            throw new Error(payload.detail)
+          }
+        }
+
         if (payload) {
           return payload
         }
@@ -59,6 +68,7 @@ export default NextAuth({
   },
   pages: {
     signIn: '/login',
-    error: '/'
+    error: '/',
+    signOut: '/'
   }
 })

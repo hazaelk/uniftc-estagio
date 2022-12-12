@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
 import { useSession } from 'next-auth/react';
+import { AiFillPlayCircle } from "react-icons/ai";
+import { FaSignInAlt } from 'react-icons/fa'
+import { IoMdSchool } from 'react-icons/io'
 
 type Props = {
   course: {
@@ -89,29 +92,24 @@ function Cursos({course, lessons}: Props) {
 
   return (
     <Layout>
-      <div className="flex md:flex-row flex-col bg-white shadow-md p-4 gap-8 text-[#121212] w-full">
-        <div>
-          <img
-            alt=""
-            className="object-cover w-full h-64 rounded-md aspect-video"
-            src={course.image_url || "https://source.unsplash.com/random/?Technology"}
-          />
-        </div>
-        <div className='relative flex flex-col w-full'>
-          { course.categories.length > 0 && <div className="mb-4 flex text-[10px] items-center gap-2">
-            {course.categories.map((category) => {
-              return <p className="px-2 py-1 bg-blue-100 border border-blue-200 rounded" key={`cat.${category.id}`}>
-                {category.name}
-              </p>
-            })}
-          </div> }
-          <p className="mb-2 text-lg font-semibold">{course.title}</p>
-          <p className="h-full mb-4 text-sm">
-            {course.description}
-          </p>
-          {/* TODO: SUBSCRIBE IF NOT SUBSCRIBED AND PUSH TO MYCOURSES */}
-          {/* IF NOT LOGGED, SHOW LOGIN PAGE FIRST */}
-          <button className="bg-[#1294F2] text-white rounded-md w-full py-2" 
+      <div className='relative w-full overflow-hidden h-80'>
+        <div style={{
+          backgroundImage: `url(${course.image_url || "https://source.unsplash.com/random/?Computer"})`,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'blur(1px)'
+        }} />
+        <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black' />
+        <div className='z-[2] absolute top-1/4 left-12 '>
+          <h1 className='text-6xl text-white'>{course.title}</h1>
+          <span className='text-sm text-white'>{course.description}</span>
+          <button className="bg-[#1294F2] text-white rounded-md w-full py-4 px-4 mt-6 flex items-center hover:bg-blue-400 duration-300" 
           onClick={()=>{
             if (session.status === 'authenticated' && !hasCourse) {
               subscribeToCourse()
@@ -134,17 +132,18 @@ function Cursos({course, lessons}: Props) {
           }}>
             {session.status === 'authenticated' 
               ? hasCourse
-                ? 'Assistir'
-                : 'Matricular-se'
-              : 'Fazer login'   
+                ? <><AiFillPlayCircle size={24} className='mr-3' /> Assistir</>
+                : <><IoMdSchool size={24} className='mr-3' />Matricular-se</>
+              : <><FaSignInAlt size={24} className='mr-3' />Fazer login</>
             }
           </button>
         </div>
       </div>
-      <h2 className="p-4 text-xl font-medium bg-gray-100">Aulas:</h2>
-      {lessons.map((lesson) => {
+
+      <h2 className="px-12 py-4 text-2xl font-medium bg-white shadow">Aulas disponíveis:</h2>
+      {lessons.map((lesson, index) => {
         return <Link href={`/watch/${course.id}/${lesson.id}`} key={lesson.id}>
-          <div className="flex md:flex-row flex-col bg-white shadow-md p-4 gap-8 text-[#121212] hover:bg-gray-400 duration-300 my-2 mx-2 rounded-md">
+          <div className={`flex md:flex-row flex-col px-12 py-6 gap-8 text-[#121212] hover:bg-gray-400 duration-300 ${index % 2 == 0 ? 'bg-slate-200' : 'bg-white border-t border-b border-black border-opacity-10' }`}>
             <div className="w-4/5">
               <p className="font-semibold">
                 {lesson.name}
