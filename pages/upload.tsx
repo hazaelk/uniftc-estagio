@@ -46,7 +46,7 @@ type Props = {
 function Upload({course, lessons}:Props) {
   const session = useSession()
   const [error, setError] = useState<string | null>(null)
-  let [isLessonModalOpen, setLessonModalOpen] = useState(true)
+  let [isLessonModalOpen, setLessonModalOpen] = useState(false)
   const router = useRouter()
   const [lessonSource, setLessonSource] = useState<any>(null)
   const [lessonName, setLessonName] = useState<any>(null)
