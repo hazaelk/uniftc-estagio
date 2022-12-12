@@ -173,6 +173,7 @@ function Upload({course, lessons}:Props) {
               const formData = new FormData();
               formData.append('file', lessonSource);
               console.log(session.data)
+              //@ts-expect-error
               console.log(session.data.user.access_token)
               fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/upload`, {	
                 method: 'POST',
