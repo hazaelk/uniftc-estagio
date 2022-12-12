@@ -37,7 +37,7 @@ function Aulas({lessons, currentLesson}: Props) {
     async function fetVideoURL() {
       const videoRequest = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/${currentClass?.video_uuid}`)
       const videoURL = await videoRequest.text()
-
+      console.log("Video request", videoURL)
       setVideoURL(videoURL)
     }
 
@@ -52,14 +52,14 @@ function Aulas({lessons, currentLesson}: Props) {
   
   return (  
     <Layout protect={true}>
-      <div className="h-[100vh] w-full relative flex">
-        {videoURL && <Plyr className="h-[50vh]" source={{
+      <div className="relative flex items-center justify-center w-full bg-black h-[80vh]">
+        <Plyr  source={{
           type: 'video',
           title: currentClass?.name,
           sources: [
-            { src: videoURL, type: ' video/mp4' }
+            { src: `${process.env.NEXT_PUBLIC_API_URL}/video/${currentClass?.video_uuid}`, type: ' video/mp4' }
           ]
-        }} /> }
+        }} className='w-full h-full'/>
       </div>
       <section className="h-full p-4 bg-blue-600">
         <div className="flex  bg-white shadow-md rounded p-8 gap-4 text-[#121212]">
