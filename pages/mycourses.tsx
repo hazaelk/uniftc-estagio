@@ -83,7 +83,7 @@ function Cursos({}: Props) {
         </div> */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           { courses && Array.isArray(courses) && courses.map((course) => {
-            return <Link href={`/course/${course.id}`} key={course.id}><CourseCardMy image={course.image_url} title={course.title} description={course.description} /></Link>
+            return <Link href={`/course/${course.id}`} key={course.id}><CourseCardMy image={course.image_url} title={course.title} description={course.description} categories={course.categories} /></Link>
           })}
         </div>
       </section>
