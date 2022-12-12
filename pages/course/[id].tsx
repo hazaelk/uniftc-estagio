@@ -90,7 +90,7 @@ function Cursos({course, lessons}: Props) {
 
   return (
     <Layout>
-      <div className='w-full h-[30vh] relative overflow-hidden'>
+      <div className='relative w-full overflow-hidden h-80'>
         <div style={{
           backgroundImage: `url(${course.image_url || "https://source.unsplash.com/random/?Computer"})`,
           position: 'absolute',
@@ -137,56 +137,7 @@ function Cursos({course, lessons}: Props) {
           </button>
         </div>
       </div>
-      {/* <div className="flex md:flex-row flex-col bg-white shadow-md p-4 gap-8 text-[#121212] w-full">
-        <div>
-          <img
-            alt=""
-            className="object-cover w-full h-64 rounded-md"
-            src={course.image_url || "https://source.unsplash.com/random/?Computer"}
-          />
-        </div>
-        <div className='relative flex flex-col w-full'>
-          { course.categories.length > 0 && <div className="mb-4 flex text-[10px] items-center gap-2">
-            {course.categories.map((category) => {
-              return <p className="px-2 py-1 bg-blue-100 border border-blue-200 rounded" key={`cat.${category.id}`}>
-                {category.name}
-              </p>
-            })}
-          </div> }
-          <p className="mb-2 text-lg font-semibold">{course.title}</p>
-          <p className="h-full mb-4 text-sm">
-            {course.description}
-          </p>
-          <button className="bg-[#1294F2] text-white rounded-md w-full py-2" 
-          onClick={()=>{
-            if (session.status === 'authenticated' && !hasCourse) {
-              subscribeToCourse()
-              .then(() => {
-                setHasCourse(true)
-                router.push('/mycourses')
-              })
-              .catch((e) => {
-                console.error(`Error subscribing to course:`, e)
-              })
 
-              return
-            }
-
-            router.push(session.status === 'authenticated' 
-            ? hasCourse
-              ? `/watch/${course.id}/${lessons[0].id}`
-              : `#`
-            : '/login'   )
-          }}>
-            {session.status === 'authenticated' 
-              ? hasCourse
-                ? 'Assistir'
-                : 'Matricular-se'
-              : 'Fazer login'   
-            }
-          </button>
-        </div>
-      </div> */}
       <h2 className="px-12 py-4 text-2xl font-medium bg-white shadow">Aulas disponíveis:</h2>
       {lessons.map((lesson, index) => {
         return <Link href={`/watch/${course.id}/${lesson.id}`} key={lesson.id}>
