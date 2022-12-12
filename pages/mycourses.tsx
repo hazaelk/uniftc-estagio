@@ -13,13 +13,19 @@ function Cursos({}: Props) {
   const router = useRouter()
   console.log(session.data)
   useEffect(()=>{
+    if (!session || !session.data) { return };
+    
     async function fetchCourses() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/learning/${session.data?.user.id}`);
-      const data = await response.json();
-      setCourses(data);
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/learning/${session.data?.user.id}`);
+        const data = await response.json();
+        setCourses(data);
+      } catch(e) {
+        console.error(e)
+      }
     }
     fetchCourses();
-  }, [session.data])
+  }, [session])
 
   
   if (session.status === 'loading') {
@@ -30,15 +36,15 @@ function Cursos({}: Props) {
     router.push('/')
     return <> </>
   }
-
+  
   return (
     <Layout>
       <section className="flex flex-col items-center justify-center px-6 pt-6 pb-10 text-white bg-blue-600">
         <h1 className="text-4xl font-medium text-center">Meus Cursos</h1>
       </section>
       <section className="px-6 pb-10 mt-10 md:px-14 lg:px-24">
-        <h2 className="mb-6 text-xl font-semibold md:text-2xl">Filtros</h2>
-        <div className="flex gap-2 mb-4">
+        <h2 className="mb-6 text-xl font-semibold md:text-2xl">Meus cursos</h2>
+        {/* <div className="flex gap-2 mb-4">
           <button className="flex items-center text-[#4F4F4F] justify-center rounded-md px-4 py-1 text-sm border border-[#D3D2D2]">
             Categoria
             <svg
@@ -74,10 +80,10 @@ function Cursos({}: Props) {
             </svg>
             
           </button>
-        </div>
+        </div> */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {courses.map((course) => {
-            return <Link href="/watch/" key={course.id}><CourseCardMy /></Link>
+          { courses && Array.isArray(courses) && courses.map((course) => {
+            return <Link href={`/course/${course.id}`} key={course.id}><CourseCardMy image={course.image_url} title={course.title} description={course.description} /></Link>
           })}
         </div>
       </section>

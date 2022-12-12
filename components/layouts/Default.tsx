@@ -3,13 +3,23 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from "next/router";
 
 type Props = {
   children: React.ReactNode;
+  protect?: boolean;
 };
 
-function DefaultLayout({ children }: Props) {
+function DefaultLayout({ children, protect }: Props) {
   const session = useSession()
+  const router = useRouter()
+  
+
+  if (protect && session.status === 'unauthenticated') {
+    router.push('/')
+    return <> </>
+  }
+
 
   return (
     <div>
@@ -29,9 +39,9 @@ function DefaultLayout({ children }: Props) {
               Início
             </li>
           </Link>
-          <Link href={"/cursos"}>
+          <Link href={"/courses"}>
             <li className="mx-4 transition-opacity duration-300 cursor-pointer opacity-70 hover:opacity-100">
-              Cursos
+              Cursos disponíveis
             </li>
           </Link>
         </ul>
@@ -40,9 +50,9 @@ function DefaultLayout({ children }: Props) {
             <Menu as="div" className="relative inline-block text-left ">
               <Menu.Button>
                 <div className="flex items-center h-full px-4 py-2 duration-300 rounded-md cursor-pointer hover:bg-opacity-10 hover:bg-white">
-                  <Link href={'/admin-page'}>
+                  {/* <Link href={'/admin-page'}> */}
                     <span className="mr-3 font-semibold">{session.data.user?.name}</span>
-                  </Link>
+                  {/* </Link> */}
                   <Image
                     src="/user_placeholder.png"
                     alt="Foto usuário"
@@ -52,12 +62,12 @@ function DefaultLayout({ children }: Props) {
                   />
                 </div>
               </Menu.Button>
-              <Menu.Items className="absolute right-0 mt-2 z-10 text-black origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg w-72 focus:outline-none">
+              <Menu.Items className="absolute right-0 z-10 mt-2 text-black origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg w-72 focus:outline-none">
                 <div className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
                       <Link
-                        href="/meus-cursos"
+                        href="/mycourses"
                         className={`${
                           active ? "bg-gray-100 text-gray-900" : "text-gray-900"
                         }  flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm`}
@@ -104,7 +114,7 @@ function DefaultLayout({ children }: Props) {
                             />
                           </svg>
                         </div>
-                        <div onClick={()=>{
+                        <div className="cursor-pointer" onClick={()=>{
                             signOut()
                           }}>
                           <p className="text-xs font-semibold" >Desconectar</p>
