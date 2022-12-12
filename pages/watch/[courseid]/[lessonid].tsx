@@ -77,12 +77,12 @@ function Aulas({ lessons, currentLesson }: Props) {
                     className={`flex md:flex-row flex-col ${
                       lesson.id === Number(lessonID)
                         ? "bg-blue-600 text-white"
-                        : "bg-white text-[#121212]"
-                    }  hover:bg-gray-400 duration-300 mb-1 rounded overflow-hidden`}
+                        : "bg-white text-[#121212] px-4"
+                    }  hover:bg-gray-400 duration-300 mb-1 rounded overflow-hidden h-12`}
                   >
                     <div className="flex items-center w-4/5 overflow-hidden whitespace-nowrap">
                       {lesson.id === Number(lessonID) && (
-                        <div className="flex items-center justify-center w-12 mr-3 bg-white aspect-square text-[#121212]">
+                        <div className="flex items-center justify-center w-12 h-12 mr-3 bg-white aspect-square text-[#121212]">
                           <AiFillPlayCircle className="text-blue-600" size={24} />
                         </div>
                       )}
