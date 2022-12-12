@@ -50,9 +50,9 @@ function DefaultLayout({ children, protect }: Props) {
             <Menu as="div" className="relative inline-block text-left ">
               <Menu.Button>
                 <div className="flex items-center h-full px-4 py-2 duration-300 rounded-md cursor-pointer hover:bg-opacity-10 hover:bg-white">
-                  <Link href={'/admin-page'}>
+                  {/* <Link href={'/admin-page'}> */}
                     <span className="mr-3 font-semibold">{session.data.user?.name}</span>
-                  </Link>
+                  {/* </Link> */}
                   <Image
                     src="/user_placeholder.png"
                     alt="Foto usuário"
@@ -114,7 +114,7 @@ function DefaultLayout({ children, protect }: Props) {
                             />
                           </svg>
                         </div>
-                        <div onClick={()=>{
+                        <div className="cursor-pointer" onClick={()=>{
                             signOut()
                           }}>
                           <p className="text-xs font-semibold" >Desconectar</p>
