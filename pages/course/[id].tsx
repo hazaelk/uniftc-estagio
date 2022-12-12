@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
 import { useSession } from 'next-auth/react';
 import { AiFillPlayCircle } from "react-icons/ai";
+import { FaSignInAlt } from 'react-icons/fa'
+import { IoMdSchool } from 'react-icons/io'
 
 type Props = {
   course: {
@@ -131,8 +133,8 @@ function Cursos({course, lessons}: Props) {
             {session.status === 'authenticated' 
               ? hasCourse
                 ? <><AiFillPlayCircle size={24} className='mr-3' /> Assistir</>
-                : 'Matricular-se'
-              : 'Fazer login'   
+                : <><IoMdSchool size={24} className='mr-3' />Matricular-se</>
+              : <><FaSignInAlt size={24} className='mr-3' />Fazer login</>
             }
           </button>
         </div>
