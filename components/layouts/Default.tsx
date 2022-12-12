@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from "next/router";
+import { AiOutlineCloudUpload } from 'react-icons/ai'
 
 type Props = {
   children: React.ReactNode;
@@ -88,6 +89,26 @@ function DefaultLayout({ children, protect }: Props) {
                           <p className="text-xs font-semibold">Meus Cursos</p>
                           <p className="text-[10px] leading-3">
                             Acessar lista de cursos matriculados
+                          </p>
+                        </div>
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        href="/upload"
+                        className={`${
+                          active ? "bg-gray-100 text-gray-900" : "text-gray-900"
+                        }  flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm`}
+                      >
+                        <div className="p-2 text-white bg-green-600 rounded-full">
+                          <AiOutlineCloudUpload size={24}/>
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold">Upload</p>
+                          <p className="text-[10px] leading-3">
+                            Adicione um novo curso a plataforma
                           </p>
                         </div>
                       </Link>
