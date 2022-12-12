@@ -155,10 +155,10 @@ function Upload({course, lessons}:Props) {
       {/* Full-screen container to center the panel */}
       <div className="fixed inset-0 flex items-center justify-center p-4">
         {/* The actual dialog panel  */}
-        <Dialog.Panel className="w-full max-w-4xl p-4 mx-auto bg-white rounded">
-          <Dialog.Title>Upload aula</Dialog.Title>
+        <Dialog.Panel className="w-full max-w-4xl max-h-[80vh] relative mx-auto bg-white rounded overflow-y-scroll">
+          <Dialog.Title className='w-full px-4 py-6 mb-4 text-2xl font-bold text-blue-900 bg-slate-200'>Upload aula</Dialog.Title>
           <form 
-            className='flex flex-col w-full'
+            className='flex flex-col w-full p-4'
             onSubmit={(e)=>{
               e.preventDefault();
               console.log(
@@ -172,9 +172,6 @@ function Upload({course, lessons}:Props) {
 
               const formData = new FormData();
               formData.append('file', lessonSource);
-              console.log(session.data)
-              //@ts-expect-error
-              console.log(session.data.user.access_token)
               fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/upload`, {	
                 method: 'POST',
                 body: formData,
@@ -190,12 +187,12 @@ function Upload({course, lessons}:Props) {
               })
             }}
           >
-            <label className='mb-1.5'  >Título</label>
-            <input className='p-2 mb-2 rounded-md shadow-sm lesson' onChange={handleLessonNameChange} />
-            <label className='mb-1.5' >Video</label>
+            <label className='mb-1.5 text-xs'  >Título</label>
+            <input className='w-full px-3 py-2 mb-4 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline' onChange={handleLessonNameChange} />
+            <label className='my-1.5 text-xs' >Vídeo</label>
             <input
               type="file"
-              className='lesson'
+              className='w-full px-3 py-2 mb-4 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
               onChange={handleFileChange} 
             />
             {lessonSource && <video src={URL.createObjectURL(lessonSource)} controls className='my-4'></video> }
