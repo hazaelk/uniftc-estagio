@@ -93,7 +93,7 @@ function Cursos({course, lessons}: Props) {
         <div>
           <img
             alt=""
-            className="object-cover w-full h-64 rounded-md aspect-video"
+            className="object-cover w-full h-64 rounded-md"
             src={course.image_url || "https://source.unsplash.com/random/?Technology"}
           />
         </div>
