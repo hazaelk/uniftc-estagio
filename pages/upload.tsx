@@ -66,42 +66,13 @@ function Upload({course, lessons}:Props) {
   const onSubmit = (data:FormData) => { 
     if (!!course) { return }
 
-    ensureCategories(data.categories.split(','))
-    .then(()=>{
-      createCourse(data)
-      .then( (course:any) => {
-        router.push(`/upload?id=${course.id}`)
-      })
+    createCourse(data)
+    .then( (course:any) => {
+      router.push(`/upload?id=${course.id}`)
     })
+
   }
 
-  const ensureCategories = async (categories: string[]) => {
-    if (categories.length === 0) {
-      setError("Você precisa adicionar pelo menos uma categoria")
-      return false
-    }
-
-    const categoriesRequest = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category`)
-    const categoriesData = await categoriesRequest.json() as category[]
-
-    const missingCategories = categories.filter( (cat:string) => !categoriesData.map((c: category) => c.name.toLowerCase() ).includes(cat.toLowerCase()) )
-    // const matchingCategories = categoriesData.filter( (cat:category) => categories.map((c: string) => c.toLowerCase() ).includes(cat.name.toLowerCase()) )
-
-    for (const categoryName in missingCategories) {
-      const registerCategoryRequest = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({name: categoryName})
-      })
-
-      if (registerCategoryRequest.status !== 201) {
-        setError("Erro ao registrar categoria: " + categoryName)
-        return false
-      }
-    }
-  }
 
   const createCourse = async (formData: any) => {
     return new Promise(async (resolve, reject) => {
