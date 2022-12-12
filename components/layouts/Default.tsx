@@ -135,12 +135,14 @@ function DefaultLayout({ children, protect }: Props) {
                             />
                           </svg>
                         </div>
-                        <Link href='/api/auth/signout' className="cursor-pointer" >
+                        <div className="cursor-pointer" onClick={()=>{
+                            signOut()
+                          }}>
                           <p className="text-xs font-semibold" >Desconectar</p>
                           <p className="text-[10px] leading-3">
                             Faça logout do seu usuário
                           </p>
-                        </Link>
+                        </div>
                       </div>
                     )}
                   </Menu.Item>
