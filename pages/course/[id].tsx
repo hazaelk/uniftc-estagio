@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
 import { useSession } from 'next-auth/react';
+import { AiFillPlayCircle } from "react-icons/ai";
 
 type Props = {
   course: {
@@ -89,12 +90,59 @@ function Cursos({course, lessons}: Props) {
 
   return (
     <Layout>
-      <div className="flex md:flex-row flex-col bg-white shadow-md p-4 gap-8 text-[#121212] w-full">
+      <div className='w-full h-[30vh] relative overflow-hidden'>
+        <div style={{
+          backgroundImage: `url(${course.image_url || "https://source.unsplash.com/random/?Computer"})`,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'blur(1px)'
+        }} />
+        <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black' />
+        <div className='z-[2] absolute top-1/4 left-12 '>
+          <h1 className='text-6xl text-white'>{course.title}</h1>
+          <span className='text-sm text-white'>{course.description}</span>
+          <button className="bg-[#1294F2] text-white rounded-md w-full py-4 px-4 mt-6 flex items-center hover:bg-blue-400 duration-300" 
+          onClick={()=>{
+            if (session.status === 'authenticated' && !hasCourse) {
+              subscribeToCourse()
+              .then(() => {
+                setHasCourse(true)
+                router.push('/mycourses')
+              })
+              .catch((e) => {
+                console.error(`Error subscribing to course:`, e)
+              })
+
+              return
+            }
+
+            router.push(session.status === 'authenticated' 
+            ? hasCourse
+              ? `/watch/${course.id}/${lessons[0].id}`
+              : `#`
+            : '/login'   )
+          }}>
+            {session.status === 'authenticated' 
+              ? hasCourse
+                ? <><AiFillPlayCircle size={24} className='mr-3' /> Assistir</>
+                : 'Matricular-se'
+              : 'Fazer login'   
+            }
+          </button>
+        </div>
+      </div>
+      {/* <div className="flex md:flex-row flex-col bg-white shadow-md p-4 gap-8 text-[#121212] w-full">
         <div>
           <img
             alt=""
             className="object-cover w-full h-64 rounded-md"
-            src={course.image_url || "https://source.unsplash.com/random/?Technology"}
+            src={course.image_url || "https://source.unsplash.com/random/?Computer"}
           />
         </div>
         <div className='relative flex flex-col w-full'>
@@ -109,8 +157,6 @@ function Cursos({course, lessons}: Props) {
           <p className="h-full mb-4 text-sm">
             {course.description}
           </p>
-          {/* TODO: SUBSCRIBE IF NOT SUBSCRIBED AND PUSH TO MYCOURSES */}
-          {/* IF NOT LOGGED, SHOW LOGIN PAGE FIRST */}
           <button className="bg-[#1294F2] text-white rounded-md w-full py-2" 
           onClick={()=>{
             if (session.status === 'authenticated' && !hasCourse) {
@@ -140,11 +186,11 @@ function Cursos({course, lessons}: Props) {
             }
           </button>
         </div>
-      </div>
-      <h2 className="p-4 text-xl font-medium bg-gray-100">Aulas:</h2>
-      {lessons.map((lesson) => {
+      </div> */}
+      <h2 className="px-12 py-4 text-2xl font-medium bg-white shadow">Aulas disponíveis:</h2>
+      {lessons.map((lesson, index) => {
         return <Link href={`/watch/${course.id}/${lesson.id}`} key={lesson.id}>
-          <div className="flex md:flex-row flex-col bg-white shadow-md p-4 gap-8 text-[#121212] hover:bg-gray-400 duration-300 my-2 mx-2 rounded-md">
+          <div className={`flex md:flex-row flex-col px-12 py-6 gap-8 text-[#121212] hover:bg-gray-400 duration-300 ${index % 2 == 0 ? 'bg-slate-200' : 'bg-white border-t border-b border-black border-opacity-10' }`}>
             <div className="w-4/5">
               <p className="font-semibold">
                 {lesson.name}
