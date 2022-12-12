@@ -18,7 +18,7 @@ function CourseCardAvailable({ title, tags, cover, author, description, id }: Pr
   // const router = useRouter()
 
   return (
-    <div className="transition-all hover:drop-shadow-md bg-white shadow-md rounded-lg p-4 text-[#121212]">
+    <div className="transition-all hover:drop-shadow-md bg-white shadow rounded-lg p-4 text-[#121212]">
       <img
         alt=""
         className="object-cover w-full mb-4 rounded-md h-52"
