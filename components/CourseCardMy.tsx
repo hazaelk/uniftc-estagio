@@ -66,7 +66,7 @@ function CourseCardMy({
       )}
       <div>
           <Link href={`/course/${id}`}>
-            <button className="w-full p-2 text-white bg-blue-600 rounded-md">
+            <button className="w-full p-2 mt-2 text-white bg-blue-600 rounded-md">
               Visitar curso
             </button>
           </Link>
