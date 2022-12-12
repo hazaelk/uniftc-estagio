@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react'
-import CourseCard from "@/components/CourseCard";
-import CourseCardAvailable from "@/components/CourseCardAvailable";
-import CourseCardMy from "@/components/CourseCardMy";
+import { useEffect, useState, useCallback } from 'react'
 import Layout from "@components/layouts/Default";
 import Link from "next/link";
 import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
+import { useSession } from 'next-auth/react';
 
 type Props = {
   course: {
@@ -30,7 +28,42 @@ type Props = {
 };
 
 function Cursos({course, lessons}: Props) {
+  const [hasCourse, setHasCourse] = useState<boolean>(false)
   const router = useRouter()
+  const session = useSession()
+
+  const checkIfHasCourse = useCallback(() => {
+    (async () => {
+      if (!session.data) { return}
+      if (!session.data.user) { return }
+      // @ts-expect-error
+      if (!session.data.user.id) { return }
+  
+      // @ts-expect-error
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/learning/${session.data.user.id}`)
+
+      if (response.status !== 200) {
+        setHasCourse(false)
+        return
+      }
+      
+      const data = await response.json()
+      console.log("User course data:", data)
+      const hasCourse = data.find((course: any) => course.id === parseInt(router.query.id as string))
+      setHasCourse(!!hasCourse)
+    })();
+  }, [session, router.query.id])
+  
+  useEffect(checkIfHasCourse, [checkIfHasCourse])
+
+  const subscribeToCourse = () => {
+    if (!session.data) { return}
+    if (!session.data.user) { return }
+    // @ts-expect-error
+    if (!session.data.user.id) { return }
+
+
+  }
 
   return (
     <Layout>
@@ -54,8 +87,22 @@ function Cursos({course, lessons}: Props) {
           <p className="h-full mb-4 text-sm">
             {course.description}
           </p>
-          <button className="bg-[#1294F2] text-white rounded-md w-full py-2" onClick={()=>{router.push('/meus-cursos')}}>
-            Matricular
+          {/* TODO: SUBSCRIBE IF NOT SUBSCRIBED AND PUSH TO MYCOURSES */}
+          {/* IF NOT LOGGED, SHOW LOGIN PAGE FIRST */}
+          <button className="bg-[#1294F2] text-white rounded-md w-full py-2" 
+          onClick={()=>{
+            router.push(session.status === 'authenticated' 
+            ? hasCourse
+              ? `/watch/${course.id}/${lessons[0].id}`
+              : `/mycourses`
+            : '/login'   )
+          }}>
+            {session.status === 'authenticated' 
+              ? hasCourse
+                ? 'Assistir'
+                : 'Matricular-se'
+              : 'Fazer login'   
+            }
           </button>
         </div>
       </div>
@@ -67,14 +114,6 @@ function Cursos({course, lessons}: Props) {
               <p className="font-semibold">
                 {lesson.name}
               </p>
-              {/* <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur.
-              </p> */}
             </div>
           </div>
         </Link>
