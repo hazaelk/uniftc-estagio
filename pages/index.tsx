@@ -45,16 +45,19 @@ function Index({courses}: Props) {
             alt="Mulher sorrindo."
             className="md:w-[30%] w-28 object-cover rounded-lg "
             src='/img_pic1.png'
+            draggable={false}
           />
           <img
             alt="Mulher sorrindo."
             className="md:w-[30%] w-28 object-cover rounded-lg"
             src='/img_pic2.png'
+            draggable={false}
           />
           <img
             alt="Mulher sorrindo."
             className="md:w-[30%] w-28 object-cover rounded-lg"
             src='/img_pic3.png'
+            draggable={false}
           />
         </div>
       </section>
