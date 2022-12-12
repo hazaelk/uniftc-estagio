@@ -72,13 +72,13 @@ function Aulas({ lessons, currentLesson }: Props) {
           <p className="py-4">Cronograma:</p>
             {lessons.map((lesson) => {
               return (
-                <Link href={`/watch/${courseID}/${lesson.id}`} key={lesson.id}>
+                <Link href={`/watch/${courseID}/${lesson.id}`} key={lesson.id} className='border-none !outline-none focus:ring-0 focus:ring-offset-0'>
                   <div
                     className={`flex md:flex-row flex-col ${
                       lesson.id === Number(lessonID)
                         ? "bg-blue-600 text-white"
                         : "bg-white text-[#121212] px-4"
-                    }  hover:bg-gray-400 duration-300 mb-1 rounded overflow-hidden h-12`}
+                    }  hover:bg-gray-400 duration-300 mb-1 rounded overflow-hidden h-12 focus:ring-0 focus:ring-offset-0 !outline-none`}
                   >
                     <div className="flex items-center w-4/5 overflow-hidden whitespace-nowrap">
                       {lesson.id === Number(lessonID) && (
