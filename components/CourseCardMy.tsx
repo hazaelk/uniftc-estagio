@@ -43,7 +43,7 @@ function CourseCardMy({
       )}
       <img
         alt=""
-        className="object-cover w-full h-32 mb-4 rounded-md"
+        className="object-cover w-full h-64 mb-4 rounded-md"
         src={
           image ||
           "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
